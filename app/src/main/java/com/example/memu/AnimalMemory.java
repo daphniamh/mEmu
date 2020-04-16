@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class AnimalMemory extends AppCompatActivity {
+    public int counter_controll_zwei = 1; //global?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,30 +81,40 @@ public class AnimalMemory extends AppCompatActivity {
         Collections.shuffle(images); //Bilder werden geshuffelt
         final Integer[] images_list = images.toArray(new Integer[images.size()]); //turn geshuffelte ArrayList into Array
 
-        final int[] counter = {0}; //final Array, damit diese Variable in der Click-Methode nutzbar ist, Workaround vorschlag von Android Stuiod
+        final int[] counter_front_back = {0}; //final Array, damit diese Variable in der Click-Methode nutzbar ist, Workaround vorschlag von Android Stuiod
             //genaueers hier: https://stackoverflow.com/questions/14425826/variable-is-accessed-within-inner-class-needs-to-be-declared-final
         //um zu überprüfen, wann Vorder und Rückseite der Karten zu sehen sind, im Tutorial nimmt man unsichtbaren Buttontext
 
+
         for(int i=0;i<button_list.length;i++){
-            //button_list[i].setBackgroundResource(R.drawable.bat);
-            //button_list[i].text = "cardBack";
-            //button_list[i].setText = "cardBack";
-            final int finalI = i;
-            final int finalI1 = i;
+
+            button_list[i].setText("cardBack");
+            //button_list[i].setTextSize(0,0); //wieder unsichtbar machen
+
+            final int loop_counter = i; //final, damit es noch iin OnClick-Methode genutzt werden kann
+
             button_list[i].setOnClickListener(new View.OnClickListener() { //beim Anklicken eines Buttons, wird ein Bild aus der Liste dahinter eingefügt
                 @Override
                 public void onClick(View v) {
 
-                    if(counter[0] == 0) {
-                        button_list[finalI].setBackgroundResource(images_list[finalI]);
-                        counter[0] = 1;
+                    if(button_list[loop_counter].getText().toString() =="cardBack" && counter_controll_zwei <3) {
+                        button_list[loop_counter].setBackgroundResource(images_list[loop_counter]);
+                        button_list[loop_counter].setText(images_list[loop_counter].toString());
+                        //if(clicked ==0){
+                        //    lastClicked = loop_counter;
+                        //}
+                        counter_controll_zwei++;
                     }
-                    else{
-                        button_list[finalI].setBackgroundResource(R.drawable.ghost);
-                        counter[0] =0;
+                    else if(button_list[loop_counter].getText().toString() != "cardBack"){
+                        button_list[loop_counter].setBackgroundResource(R.drawable.ghost);
+
+                        counter_controll_zwei--; //wieder zurück um 1, damit neues Pärchen gedreht werden kann
                     }
 
                     }
+                //if (found ==2){
+                //    if()
+                //}
             }); //diese Klammer + ; ist wichtig!
 
         }

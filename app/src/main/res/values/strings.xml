@@ -4,9 +4,10 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Animal Memory</string>
+    <string name="next">Next</string>
     <string name="previous">Back to HomeScreen</string>
 
+    <string name="animal_memory">Animal Memory</string>
     <string name="hello_first_fragment">Welcome to mEmu</string>
     <string name="hello_second_fragment">Welcome to the animal memory</string>
 </resources>

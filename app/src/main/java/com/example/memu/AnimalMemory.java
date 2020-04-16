@@ -12,9 +12,10 @@ import java.util.Collections;
 
 public class AnimalMemory extends AppCompatActivity {
 
-    public int counter_controll_zwei = 0; //global?
+    public int counter_control_zwei = 0; //global?
     public int clicked = 0;
     public boolean turned_2_over = false;
+    public int card_to_compare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,24 +106,35 @@ public class AnimalMemory extends AppCompatActivity {
 
                             button_list[loop_counter].setText(images_list[loop_counter].toString());
 
-                        counter_controll_zwei++;
-                        //clicked++;
+                        if (counter_control_zwei == 0){ //wenn das erste Karte zum Umdrehen ist
+                            //für späteren Pärchen-Vergleich speichern
+                            card_to_compare = loop_counter;
+                        }
+                        counter_control_zwei++;
+
                     }
-                    else if(button_list[loop_counter].getText().toString() != "cardBack"){
+                    else if(button_list[loop_counter].getText().toString() != "cardBack" && turned_2_over == true){
                         button_list[loop_counter].setBackgroundResource(R.drawable.ghost);
 
                         button_list[loop_counter].setText("cardBack");
 
 
-                        counter_controll_zwei--; //wieder zurück um 1, damit neues Pärchen gedreht werden kann
+                        counter_control_zwei--; //wieder zurück um 1, damit neues Pärchen gedreht werden kann
                     }
 
 
-                    if (counter_controll_zwei ==2){
+                    if (counter_control_zwei ==2){
                         turned_2_over = true;
-                        //kommt noch zeugs
+                        //Pärchen-Reward
+                        //Vergleich der Bild-Texte
+                        if(button_list[loop_counter].getText().toString().equals(button_list[card_to_compare].getText().toString())){
+                            //richtiges Pärchen!
+                            button_list[loop_counter].setBackgroundResource(R.color.colorPrimary);
+                            button_list[card_to_compare].setBackgroundResource(R.color.colorPrimary);
+                            //hier hängt sich mein Programm auf
+                        }
                     }
-                    else if(counter_controll_zwei ==0){
+                    else if(counter_control_zwei ==0){
                         turned_2_over = false;
                     }
                 }

@@ -57,34 +57,47 @@ public class AnimalMemory extends AppCompatActivity {
         button19 = (Button) findViewById(R.id.button_ghost19);
         button20 = (Button) findViewById(R.id.button_ghost20);
 
-
-
-
-        ArrayList<Button> buttons   =new ArrayList<Button>(20);
-        buttons.add(0, button1);
-        buttons.add(1, button2);
-        buttons.add(button3);
-        buttons.add(button4);
-        buttons.add(button5);
-        buttons.add(button6);
-        buttons.add(button7);
-        buttons.add(button8);
-        buttons.add(button9);
-        buttons.add(button10);
-        buttons.add(button11);
-        buttons.add(button12);
-        buttons.add(button13);
-        buttons.add(button14);
-        buttons.add(button15);
-        buttons.add(button16);
-        buttons.add(button17);
-        buttons.add(button18);
-        buttons.add(button19);
-        buttons.add(button20);
+        Button[] button_list = {button1, button2, button3, button4, button5};
 
         Collections.shuffle(images);
-        buttons.set(0,button1).setBackgroundResource(R.drawable.bat); //Fehler, hier nullpointer reference
-        //for(int image : images)
-        //  buttons.set(i,button1).setBackgroundResource(R.drawable.bat);
+
+        for(int i=0;i<button_list.length;i++){
+            button_list[i].setBackgroundResource(R.drawable.bat);
+        }
+
+    //VideoMinute 23.48 min
+
+
+        //ArrayList<Button> buttons   =new ArrayList<Button>(20);
+        //buttons.add(0, button1);
+        //buttons.add(1, button2);
+        //buttons.add(button3);
+        //buttons.add(button4);
+        //buttons.add(button5);
+        //buttons.add(button6);
+        //buttons.add(button7);
+        //buttons.add(button8);
+        //buttons.add(button9);
+        //buttons.add(button10);
+        //buttons.add(button11);
+        //buttons.add(button12);
+        //buttons.add(button13);
+        //buttons.add(button14);
+        //buttons.add(button15);
+        //buttons.add(button16);
+        //buttons.add(button17);
+        //buttons.add(button18);
+        //buttons.add(button19);
+        //buttons.add(button20);
+//
+        //Collections.shuffle(images);
+        ////buttons.set(0,button1).setBackgroundResource(R.drawable.bat); //Fehler, hier nullpointer reference
+        //for(int i = 0; i<12; i++)
+        //{for (Button f : buttons) {
+        //    buttons.set(i, f).setBackgroundResource(R.drawable.bat);
+        //    buttons.set(i,f).setText("cardBack"); = "cardBack";
+        //    buttons.set(i,f).textSize = 0.0;
+//
+        //}}
     }
 }

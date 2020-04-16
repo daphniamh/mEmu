@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class AnimalMemory extends AppCompatActivity {
-    public int counter_controll_zwei = 1; //global?
+
+    public int counter_controll_zwei = 0; //global?
+    public int clicked = 0;
+    public boolean turned_2_over = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,24 +100,32 @@ public class AnimalMemory extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    if(button_list[loop_counter].getText().toString() =="cardBack" && counter_controll_zwei <3) {
+                    if(button_list[loop_counter].getText().toString() =="cardBack" && turned_2_over == false) {
                         button_list[loop_counter].setBackgroundResource(images_list[loop_counter]);
-                        button_list[loop_counter].setText(images_list[loop_counter].toString());
-                        //if(clicked ==0){
-                        //    lastClicked = loop_counter;
-                        //}
+
+                            button_list[loop_counter].setText(images_list[loop_counter].toString());
+
                         counter_controll_zwei++;
+                        //clicked++;
                     }
                     else if(button_list[loop_counter].getText().toString() != "cardBack"){
                         button_list[loop_counter].setBackgroundResource(R.drawable.ghost);
 
+                        button_list[loop_counter].setText("cardBack");
+
+
                         counter_controll_zwei--; //wieder zurück um 1, damit neues Pärchen gedreht werden kann
                     }
 
+
+                    if (counter_controll_zwei ==2){
+                        turned_2_over = true;
+                        //kommt noch zeugs
                     }
-                //if (found ==2){
-                //    if()
-                //}
+                    else if(counter_controll_zwei ==0){
+                        turned_2_over = false;
+                    }
+                }
             }); //diese Klammer + ; ist wichtig!
 
         }

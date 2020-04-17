@@ -8,6 +8,8 @@
     <string name="previous">Back to HomeScreen</string>
 
     <string name="animal_memory">Animal Memory</string>
+    <string name="pair_counter">10</string>
+
     <string name="hello_first_fragment">Welcome to mEmu</string>
     <string name="hello_second_fragment">Welcome to the animal memory</string>
 </resources>

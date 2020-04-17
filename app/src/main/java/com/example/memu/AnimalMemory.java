@@ -3,9 +3,11 @@ package com.example.memu;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,6 +53,8 @@ public class AnimalMemory extends AppCompatActivity {
         Button button1,button2, button3, button4, button5, button6, button7,
                 button8,button9, button10, button11, button12, button13, button14,
                 button15, button16, button17, button18, button19, button20;
+        final TextView pair_counter_textfenster;
+        pair_counter_textfenster = (TextView) findViewById(R.id.textView_pair_counter);
 
         button1 = (Button) findViewById(R.id.button_ghost1);
         button2 = (Button) findViewById(R.id.button_ghost2);
@@ -93,7 +97,7 @@ public class AnimalMemory extends AppCompatActivity {
         for(int i=0;i<button_list.length;i++){
 
             button_list[i].setText("cardBack");
-            //button_list[i].setTextSize(0,0); //wieder unsichtbar machen
+            button_list[i].setTextSize(0,0); //macht den ButtonText unsichtbar
 
             final int loop_counter = i; //final, damit es noch iin OnClick-Methode genutzt werden kann
 
@@ -113,7 +117,7 @@ public class AnimalMemory extends AppCompatActivity {
                         counter_control_zwei++;
 
                     }
-                    else if(button_list[loop_counter].getText().toString() != "cardBack" && turned_2_over == true){
+                    else if(button_list[loop_counter].getText().toString() != "cardBack" && turned_2_over == true && button_list[loop_counter].getText().toString() != "pair" ){
                         button_list[loop_counter].setBackgroundResource(R.drawable.ghost);
 
                         button_list[loop_counter].setText("cardBack");
@@ -123,26 +127,41 @@ public class AnimalMemory extends AppCompatActivity {
                     }
 
 
-                    if (counter_control_zwei ==2){
+                    if (counter_control_zwei ==2 && button_list[loop_counter].getText().toString() != "pair"){
                         turned_2_over = true;
                         //Pärchen-Reward
                         //Vergleich der Bild-Texte
                         if(button_list[loop_counter].getText().toString().equals(button_list[card_to_compare].getText().toString())){
-                            //richtiges Pärchen!
-                            button_list[loop_counter].setBackgroundResource(R.color.colorPrimary);
-                            button_list[card_to_compare].setBackgroundResource(R.color.colorPrimary);
-                            //hier hängt sich mein Programm auf
+                            //richtiges Pärchen für user sichtbar markieren
+
+
+                            //button_list[loop_counter].setBackgroundColor(Color.YELLOW);
+                            //button_list[card_to_compare].setBackgroundColor(Color.YELLOW);
+
+                            //gefundenes Pärchen markieren
+                            button_list[loop_counter].setText("pair");
+                            button_list[loop_counter].setTextSize(23);
+                            button_list[card_to_compare].setText("pair");
+                            button_list[card_to_compare].setTextSize(23);
+
+                            int counter = Integer.parseInt(pair_counter_textfenster.getText().toString());
+                            counter--;
+                            String counter_string = Integer.toString(counter);
+                            pair_counter_textfenster.setText(counter_string);
+                            turned_2_over = false;
+                            counter_control_zwei=0;
                         }
                     }
                     else if(counter_control_zwei ==0){
                         turned_2_over = false;
                     }
+
                 }
             }); //diese Klammer + ; ist wichtig!
 
         }
 
-    //VideoMinute 23.48 min
+    //VideoMinute 40.48 min
         //https://www.youtube.com/watch?v=BGvjScKcW1s
 
 

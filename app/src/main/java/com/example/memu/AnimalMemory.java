@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class AnimalMemory extends AppCompatActivity {
     public int clicked = 0;
     public boolean turned_2_over = false;
     public int card_to_compare;
+    public int pair_counter;
+    public int click_counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +31,7 @@ public class AnimalMemory extends AppCompatActivity {
 
         //meine Programmcode-Beginn
 
-        ArrayList<Integer> images = new ArrayList<Integer>(10);
+        final ArrayList<Integer> images = new ArrayList<Integer>(10);
         images.add(0, R.drawable.bat);
         images.add (1, R.drawable.bee);
         images.add (2, R.drawable.coala);
@@ -53,8 +56,14 @@ public class AnimalMemory extends AppCompatActivity {
         Button button1,button2, button3, button4, button5, button6, button7,
                 button8,button9, button10, button11, button12, button13, button14,
                 button15, button16, button17, button18, button19, button20;
-        final TextView pair_counter_textfenster;
-        pair_counter_textfenster = (TextView) findViewById(R.id.textView_pair_counter);
+
+        final TextView pair_counter_textfenster, click_counter_textfenster;
+        pair_counter_textfenster = (TextView) findViewById(R.id.textView_pair_counter); //redundant?
+
+        final ImageView image_gameover;
+        image_gameover = (ImageView) findViewById(R.id.image_gameover);
+
+        click_counter_textfenster = (TextView) findViewById(R.id.textView_click_counter);
 
         button1 = (Button) findViewById(R.id.button_ghost1);
         button2 = (Button) findViewById(R.id.button_ghost2);
@@ -96,7 +105,8 @@ public class AnimalMemory extends AppCompatActivity {
 
         for(int i=0;i<button_list.length;i++){
 
-            button_list[i].setText("cardBack");
+            button_list[i].setText("cardBack"); //durch nachfolgende Zeile ersetzt
+            //button_list[i].setText(R.string.card_back);
             button_list[i].setTextSize(0,0); //macht den ButtonText unsichtbar
 
             final int loop_counter = i; //final, damit es noch iin OnClick-Methode genutzt werden kann
@@ -105,10 +115,17 @@ public class AnimalMemory extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    if(button_list[loop_counter].getText().toString() =="cardBack" && turned_2_over == false) {
-                        button_list[loop_counter].setBackgroundResource(images_list[loop_counter]);
 
-                            button_list[loop_counter].setText(images_list[loop_counter].toString());
+                    Button card1 = button_list[loop_counter];
+
+                    if(card1.getText().toString() =="cardBack" && turned_2_over == false) {
+                        card1.setBackgroundResource(images_list[loop_counter]);
+                        card1.setText(images_list[loop_counter].toString());
+
+                        // um Anzahl der umgedrehten Karten zu zählen
+                        click_counter++;
+                        String click_counter_string = Integer.toString(click_counter);
+                        click_counter_textfenster.setText(click_counter_string);
 
                         if (counter_control_zwei == 0){ //wenn das erste Karte zum Umdrehen ist
                             //für späteren Pärchen-Vergleich speichern
@@ -117,36 +134,31 @@ public class AnimalMemory extends AppCompatActivity {
                         counter_control_zwei++;
 
                     }
-                    else if(button_list[loop_counter].getText().toString() != "cardBack" && turned_2_over == true && button_list[loop_counter].getText().toString() != "pair" ){
-                        button_list[loop_counter].setBackgroundResource(R.drawable.ghost);
+                    else if(card1.getText().toString() != "cardBack" && turned_2_over == true && card1.getText().toString() != "pair" ){
+                        card1.setBackgroundResource(R.drawable.ghost);
+                        card1.setText("cardBack"); //resource
 
-                        button_list[loop_counter].setText("cardBack");
-
-
-                        counter_control_zwei--; //wieder zurück um 1, damit neues Pärchen gedreht werden kann
+                        counter_control_zwei--; //wieder zurück, damit neues Pärchen gedreht werden kann
                     }
 
-
-                    if (counter_control_zwei ==2 && button_list[loop_counter].getText().toString() != "pair"){
+                    if (counter_control_zwei ==2 && card1.getText().toString() != "pair"){
                         turned_2_over = true;
-                        //Pärchen-Reward
                         //Vergleich der Bild-Texte
-                        if(button_list[loop_counter].getText().toString().equals(button_list[card_to_compare].getText().toString())){
-                            //richtiges Pärchen für user sichtbar markieren
+                        Button card2 = button_list[card_to_compare];
 
-
-                            //button_list[loop_counter].setBackgroundColor(Color.YELLOW);
-                            //button_list[card_to_compare].setBackgroundColor(Color.YELLOW);
-
+                        if(card1.getText().toString().equals(card2.getText().toString())){
                             //gefundenes Pärchen markieren
-                            button_list[loop_counter].setText("pair");
-                            button_list[loop_counter].setTextSize(23);
-                            button_list[card_to_compare].setText("pair");
-                            button_list[card_to_compare].setTextSize(23);
+                            card1.setText("pair"); //durch String-Resource ersetzten
+                            card1.setTextColor(Color.WHITE);
+                            card1.setTextSize(23);
 
-                            int counter = Integer.parseInt(pair_counter_textfenster.getText().toString());
-                            counter--;
-                            String counter_string = Integer.toString(counter);
+                            card2.setText("pair");
+                            card2.setTextSize(23);
+                            card2.setTextColor(Color.WHITE);
+
+                            pair_counter = Integer.parseInt(pair_counter_textfenster.getText().toString());
+                            pair_counter--;
+                            String counter_string = Integer.toString(pair_counter);
                             pair_counter_textfenster.setText(counter_string);
                             turned_2_over = false;
                             counter_control_zwei=0;
@@ -155,7 +167,12 @@ public class AnimalMemory extends AppCompatActivity {
                     else if(counter_control_zwei ==0){
                         turned_2_over = false;
                     }
+                    if(pair_counter == 9){ //muss 0 sein!!!
+                        //Spiel-Ende
+                        image_gameover.setVisibility(View.VISIBLE);
 
+
+                    }
                 }
             }); //diese Klammer + ; ist wichtig!
 
@@ -165,36 +182,5 @@ public class AnimalMemory extends AppCompatActivity {
         //https://www.youtube.com/watch?v=BGvjScKcW1s
 
 
-        //ArrayList<Button> buttons   =new ArrayList<Button>(20);
-        //buttons.add(0, button1);
-        //buttons.add(1, button2);
-        //buttons.add(button3);
-        //buttons.add(button4);
-        //buttons.add(button5);
-        //buttons.add(button6);
-        //buttons.add(button7);
-        //buttons.add(button8);
-        //buttons.add(button9);
-        //buttons.add(button10);
-        //buttons.add(button11);
-        //buttons.add(button12);
-        //buttons.add(button13);
-        //buttons.add(button14);
-        //buttons.add(button15);
-        //buttons.add(button16);
-        //buttons.add(button17);
-        //buttons.add(button18);
-        //buttons.add(button19);
-        //buttons.add(button20);
-//
-        //Collections.shuffle(images);
-        ////buttons.set(0,button1).setBackgroundResource(R.drawable.bat); //Fehler, hier nullpointer reference
-        //for(int i = 0; i<12; i++)
-        //{for (Button f : buttons) {
-        //    buttons.set(i, f).setBackgroundResource(R.drawable.bat);
-        //    buttons.set(i,f).setText("cardBack"); = "cardBack";
-        //    buttons.set(i,f).textSize = 0.0;
-//
-        //}}
     }
 }

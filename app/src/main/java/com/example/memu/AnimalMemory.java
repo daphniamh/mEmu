@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +20,7 @@ public class AnimalMemory extends AppCompatActivity {
     public int clicked = 0;
     public boolean turned_2_over = false;
     public int card_to_compare;
-    public int pair_counter;
+    public int pair_counter = 10;
     public int click_counter;
 
     @Override
@@ -167,10 +168,11 @@ public class AnimalMemory extends AppCompatActivity {
                     else if(counter_control_zwei ==0){
                         turned_2_over = false;
                     }
-                    if(pair_counter == 9){ //muss 0 sein!!!
+                    if(pair_counter == 0){
                         //Spiel-Ende
                         image_gameover.setVisibility(View.VISIBLE);
-
+                        Toast myToast = Toast.makeText(getApplicationContext(),"Super, alle gefunden!", Toast.LENGTH_LONG);
+                        myToast.show();
 
                     }
                 }

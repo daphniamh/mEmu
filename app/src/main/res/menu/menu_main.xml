@@ -7,4 +7,10 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/animal_memory"
+        android:orderInCategory="100"
+        android:title="@string/action_animal_memory"
+        app:showAsAction="ifRoom"
+         />
 </menu>

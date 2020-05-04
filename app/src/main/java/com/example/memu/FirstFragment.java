@@ -27,7 +27,8 @@ public class FirstFragment extends Fragment {
         View fragmentFirstLayout = inflater.inflate(R.layout.fragment_first, container, false);
         //Suchen der Items per View hier einmalig für ganze Klasse
 
-        button_animal_memory = fragmentFirstLayout.findViewById(R.id.button_animal_memory);
+        //Button wurde glöscht, welcher weiiter unten mit clickevent aufgerufen werden könnte (auskommentiert)
+        //button_animal_memory = fragmentFirstLayout.findViewById(R.id.button_animal_memory);
 
         return fragmentFirstLayout;
     }
@@ -43,16 +44,16 @@ public class FirstFragment extends Fragment {
             }
         });
 
-        //Anklicken des ImgaeButton button_Katze
-        button_animal_memory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        //Anklicken eines Buttons auf Homescreen (Button habe ich gelöscht)
+       //button_animal_memory.setOnClickListener(new View.OnClickListener() {
+       //    @Override
+       //    public void onClick(View view) {
 
-                Intent intent = new Intent(getActivity(), AnimalMemory.class);
-                startActivity(intent);
+       //        Intent intent = new Intent(getActivity(), AnimalMemory.class);
+       //        startActivity(intent);
 
-            }
-        });
+       //    }
+       //});
 
     }
 }

@@ -1,5 +1,6 @@
 package com.example.memu;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,11 +52,18 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        else if(id==R.id.animal_memory){
+            Intent intent = new Intent(this, AnimalMemory.class);
+            startActivity(intent);
+            return true;
+        }
+        else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

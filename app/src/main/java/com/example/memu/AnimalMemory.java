@@ -52,9 +52,9 @@ public class AnimalMemory extends AppCompatActivity {
         images.add (16, R.drawable.shark);
         images.add (17, R.drawable.sheep);
         images.add (18, R.drawable.spider);
-        images.add (19, R.drawable.turtle);
+        images.add (19, R.drawable.a2_birke); //auch hier
 
-        Button button1,button2, button3, button4, button5, button6, button7,
+        final Button button1,button2, button3, button4, button5, button6, button7,
                 button8,button9, button10, button11, button12, button13, button14,
                 button15, button16, button17, button18, button19, button20;
 
@@ -93,7 +93,7 @@ public class AnimalMemory extends AppCompatActivity {
         final Integer[] images_list1 = {R.drawable.bat, R.drawable.coala, R.drawable.elephant,  //kann weg?
                                  R.drawable.fox, R.drawable.turtle,
                 R.drawable.bat, R.drawable.coala, R.drawable.elephant,
-                R.drawable.fox, R.drawable.turtle };
+                R.drawable.fox, R.drawable.a2_birke}; //turtle ersetzt
 
 
         Collections.shuffle(images); //Bilder werden geshuffelt
@@ -123,7 +123,7 @@ public class AnimalMemory extends AppCompatActivity {
                         card1.setBackgroundResource(images_list[loop_counter]);
                         card1.setText(images_list[loop_counter].toString());
 
-                        // um Anzahl der umgedrehten Karten zu zählen
+                        //um Anzahl der umgedrehten Karten zu zählen
                         click_counter++;
                         String click_counter_string = Integer.toString(click_counter);
                         click_counter_textfenster.setText(click_counter_string);
@@ -137,6 +137,7 @@ public class AnimalMemory extends AppCompatActivity {
                     }
                     else if(card1.getText().toString() != "cardBack" && turned_2_over == true && card1.getText().toString() != "pair" ){
                         card1.setBackgroundResource(R.drawable.ghost);
+
                         card1.setText("cardBack"); //resource
 
                         counter_control_zwei--; //wieder zurück, damit neues Pärchen gedreht werden kann

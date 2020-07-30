@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        else if(id==R.id.tree_memory){
+            Intent intent = new Intent(this, TreeMemory.class);
+            startActivity(intent);
+            return true;
+        }
         else {
             return super.onOptionsItemSelected(item);
         }

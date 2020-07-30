@@ -13,4 +13,10 @@
         android:title="@string/action_animal_memory"
         app:showAsAction="ifRoom"
          />
+    <item
+        android:id="@+id/tree_memory"
+        android:orderInCategory="100"
+        android:title="@string/action_tree_memory"
+        app:showAsAction="ifRoom"
+        />
 </menu>

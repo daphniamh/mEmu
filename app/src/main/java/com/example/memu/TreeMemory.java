@@ -48,11 +48,11 @@ public class TreeMemory extends AppCompatActivity  {
         images.add (12, R.drawable.a2_birke);
         images.add (13, R.drawable.a2_birke);
         images.add (14, R.drawable.a2_birke);
-        images.add (15, R.drawable.a2_birke);
-        images.add (16, R.drawable.a2_birke);
-        images.add (17, R.drawable.a2_birke);
-        images.add (18, R.drawable.a2_birke);
-        images.add (19, R.drawable.a2_birke); //auch hier
+        images.add (15, R.drawable.b1_trauerweide);
+        images.add (16, R.drawable.b1_trauerweide);
+        images.add (17, R.drawable.b1_trauerweide);
+        images.add (18, R.drawable.b1_trauerweide);
+        images.add (19, R.drawable.b1_trauerweide);
 
         final Button button1,button2, button3, button4, button5, button6, button7,
                 button8,button9, button10, button11, button12, button13, button14,
@@ -99,7 +99,7 @@ public class TreeMemory extends AppCompatActivity  {
         //alle ghosts ersetzen -> durch Bäumchen
         for(int i=0;i<button_list.length;i++) {
 
-            button_list[i].setBackgroundResource(R.drawable.zebra); //weiter unten gibt es auch eine stelle
+            button_list[i].setBackgroundResource(R.drawable.baum_unbekannt); //weiter unten gibt es auch eine stelle
         }
 
         Collections.shuffle(images); //Bilder werden geshuffelt
@@ -142,7 +142,7 @@ public class TreeMemory extends AppCompatActivity  {
 
                     }
                     else if(card1.getText().toString() != "cardBack" && turned_2_over == true && card1.getText().toString() != "pair" ){
-                        card1.setBackgroundResource(R.drawable.zebra);
+                        card1.setBackgroundResource(R.drawable.baum_unbekannt);
 
                         card1.setText("cardBack"); //resource
 
@@ -154,7 +154,17 @@ public class TreeMemory extends AppCompatActivity  {
                         //Vergleich der Bild-Texte
                         Button card2 = button_list[card_to_compare];
 
-                        if(card1.getText().toString().equals(card2.getText().toString())){
+                        //get Texts from Memory-Cards 1 and 2
+                        Integer card1_text = Integer.parseInt(card1.getText().toString())- 2131165100;
+                        Integer card2_text = Integer.parseInt(card2.getText().toString())- 2131165100;
+
+                        //if(card1_text.equals(card2_text)){
+                        if(card1_text+card2_text==183 ){
+                            //Erfolg anzeigen
+                            Toast myToast = Toast.makeText(getApplicationContext(),
+                                    "Eibe!", Toast.LENGTH_LONG);
+                            myToast.show();
+
                             //gefundenes Pärchen markieren
                             card1.setText("pair"); //durch String-Resource ersetzten
                             card1.setTextColor(Color.WHITE);

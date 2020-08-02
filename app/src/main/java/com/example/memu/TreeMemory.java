@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import android.util.Log;
+
 
 public class TreeMemory extends AppCompatActivity  {
     public int counter_control_zwei = 0; //global?
@@ -44,12 +46,12 @@ public class TreeMemory extends AppCompatActivity  {
         images.add (8, R.drawable.a2_birke);
         images.add (9, R.drawable.a2_birke);
         images.add(10, R.drawable.a2_birke);
-        images.add (11, R.drawable.a2_birke);
-        images.add (12, R.drawable.a2_birke);
-        images.add (13, R.drawable.a2_birke);
-        images.add (14, R.drawable.a2_birke);
+        images.add (11, R.drawable.b2_trauerweide);
+        images.add (12, R.drawable.b2_trauerweide);
+        images.add (13, R.drawable.b2_trauerweide);
+        images.add (14, R.drawable.b2_trauerweide);
         images.add (15, R.drawable.b1_trauerweide);
-        images.add (16, R.drawable.b1_trauerweide);
+        images.add (16, R.drawable.b2_trauerweide);
         images.add (17, R.drawable.b1_trauerweide);
         images.add (18, R.drawable.b1_trauerweide);
         images.add (19, R.drawable.b1_trauerweide);
@@ -157,9 +159,13 @@ public class TreeMemory extends AppCompatActivity  {
                         //get Texts from Memory-Cards 1 and 2
                         Integer card1_text = Integer.parseInt(card1.getText().toString())- 2131165100;
                         Integer card2_text = Integer.parseInt(card2.getText().toString())- 2131165100;
+                        Log.d("Hashcode1:", card1_text.toString()); //nur für entwicklung, nachher löschen
+                        Log.d("Hashcode2:", card2_text.toString()); //nur für entwicklung, nachher löschen
+
 
                         //if(card1_text.equals(card2_text)){
-                        if(card1_text+card2_text==183 ){
+                        Integer card_summe = card1_text+card2_text;
+                        if(card_summe==183 ||  card_summe == 363 ){
                             //Erfolg anzeigen
                             Toast myToast = Toast.makeText(getApplicationContext(),
                                     "Eibe!", Toast.LENGTH_LONG);

@@ -36,25 +36,25 @@ public class TreeMemory extends AppCompatActivity  {
 
         final ArrayList<Integer> images = new ArrayList<Integer>(10);
         images.add(0, R.drawable.a1_birke);
-        images.add (1, R.drawable.a1_birke);
-        images.add (2, R.drawable.a1_birke); //weiße
-        images.add (3, R.drawable.a1_birke);
-        images.add (4, R.drawable.a1_birke);
-        images.add (5, R.drawable.a2_birke); //gelbe
-        images.add (6, R.drawable.a2_birke);
-        images.add (7, R.drawable.a2_birke);
-        images.add (8, R.drawable.a2_birke);
-        images.add (9, R.drawable.a2_birke);
-        images.add(10, R.drawable.a2_birke);
-        images.add (11, R.drawable.b2_trauerweide);
-        images.add (12, R.drawable.b2_trauerweide);
+        images.add (1, R.drawable.a2_birke);
+        images.add (2, R.drawable.b1_trauerweide);
+        images.add (3, R.drawable.b2_trauerweide);
+        images.add (4, R.drawable.c1_buche);
+        images.add (5, R.drawable.c2_buche);
+        images.add (6, R.drawable.d1_eibe);
+        images.add (7, R.drawable.d2_eibe);
+        images.add (8, R.drawable.e1_rosskastanie);
+        images.add (9, R.drawable.e2_rosskastanie);
+        images.add(10, R.drawable.a1_birke);
+        images.add (11, R.drawable.a2_birke);
+        images.add (12, R.drawable.b1_trauerweide);
         images.add (13, R.drawable.b2_trauerweide);
-        images.add (14, R.drawable.b2_trauerweide);
-        images.add (15, R.drawable.b1_trauerweide);
-        images.add (16, R.drawable.b2_trauerweide);
-        images.add (17, R.drawable.b1_trauerweide);
-        images.add (18, R.drawable.b1_trauerweide);
-        images.add (19, R.drawable.b1_trauerweide);
+        images.add (14, R.drawable.c1_buche);
+        images.add (15, R.drawable.c2_buche);
+        images.add (16, R.drawable.d1_eibe);
+        images.add (17, R.drawable.d2_eibe);
+        images.add (18, R.drawable.e1_rosskastanie);
+        images.add (19, R.drawable.e2_rosskastanie);
 
         final Button button1,button2, button3, button4, button5, button6, button7,
                 button8,button9, button10, button11, button12, button13, button14,
@@ -157,26 +157,33 @@ public class TreeMemory extends AppCompatActivity  {
                         Button card2 = button_list[card_to_compare];
 
                         //get Texts from Memory-Cards 1 and 2
-                        Integer card1_text = Integer.parseInt(card1.getText().toString())- 2131165100;
+                        Integer card1_text = Integer.parseInt(card1.getText().toString())- 2131165100; //fatal error, wenn man cards nicht zurückdreht
                         Integer card2_text = Integer.parseInt(card2.getText().toString())- 2131165100;
-                        Log.d("Hashcode1:", card1_text.toString()); //nur für entwicklung, nachher löschen
-                        Log.d("Hashcode2:", card2_text.toString()); //nur für entwicklung, nachher löschen
+                        Log.d("Hashcode2:", card1_text.toString()); //nur für entwicklung, nachher löschen
+                        Log.d("Hashcode1:", card2_text.toString()); //nur für entwicklung, nachher löschen
 
 
                         //if(card1_text.equals(card2_text)){
                         Integer card_summe = card1_text+card2_text;
-                        if(card_summe==183 ||  card_summe == 363 ){
+                        if(card_summe==183 ||  card_summe == 363 ||  card_summe == 395 ||  card_summe == 389 ||  card_summe == 411){
+                            //Baumsorte ermitteln
+                             String baum_sorte;
+                            if(card_summe == 183){
+                                baum_sorte = "Birke";
+                            }
+                                else{
+                                    baum_sorte = "BAUM";
+                            }
                             //Erfolg anzeigen
-                            Toast myToast = Toast.makeText(getApplicationContext(),
-                                    "Eibe!", Toast.LENGTH_LONG);
+                            Toast myToast = Toast.makeText(getApplicationContext(), baum_sorte , Toast.LENGTH_LONG);
                             myToast.show();
 
                             //gefundenes Pärchen markieren
-                            card1.setText("pair"); //durch String-Resource ersetzten
+                            card1.setText(baum_sorte); //durch String-Resource ersetzten
                             card1.setTextColor(Color.WHITE);
                             card1.setTextSize(23);
 
-                            card2.setText("pair");
+                            card2.setText(baum_sorte);
                             card2.setTextSize(23);
                             card2.setTextColor(Color.WHITE);
 
@@ -193,9 +200,14 @@ public class TreeMemory extends AppCompatActivity  {
                     }
                     if(pair_counter == 0){
                         //Spiel-Ende
-                        image_gameover.setVisibility(View.VISIBLE);
+                        //image_gameover.setVisibility(View.VISIBLE);
                         Toast myToast = Toast.makeText(getApplicationContext(),"Super, alle gefunden!", Toast.LENGTH_LONG);
                         myToast.show();
+                        long endTime = System.currentTimeMillis() + 3000; //Stern sollte 3 millisekunden laufen
+                        while (System.currentTimeMillis() < endTime) {
+                            //loop
+                            image_gameover.setVisibility(View.VISIBLE);
+                        }
 
                     }
                 }

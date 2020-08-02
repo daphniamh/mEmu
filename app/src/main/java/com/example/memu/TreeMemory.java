@@ -157,33 +157,59 @@ public class TreeMemory extends AppCompatActivity  {
                         Button card2 = button_list[card_to_compare];
 
                         //get Texts from Memory-Cards 1 and 2
-                        Integer card1_text = Integer.parseInt(card1.getText().toString())- 2131165100; //fatal error, wenn man cards nicht zurückdreht
-                        Integer card2_text = Integer.parseInt(card2.getText().toString())- 2131165100;
-                        Log.d("Hashcode2:", card1_text.toString()); //nur für entwicklung, nachher löschen
-                        Log.d("Hashcode1:", card2_text.toString()); //nur für entwicklung, nachher löschen
+                        String card1_text = card1.getText().toString();
+                        String card2_text = card2.getText().toString();
+                        Integer card1_text_int;
+                        if(card1_text!="pair" && card1_text !="cardBack"){
+                            //damit es nicht zum Overflow kommt, wenn die Karte gerade auf Modus pair oder cardBack ist
+                            card1_text_int = Integer.parseInt(card1_text)- 2131165100;
+                        }
+                        else{
+                            card1_text_int = 1;
+                        }
+                        Integer card2_text_int;
+                        if(card2_text!="pair" && card2_text !="cardBack"){
+                            card2_text_int = Integer.parseInt(card2_text)- 2131165100;
+                        }
+                        else{
+                            card2_text_int = 1;
+                        }
+
+                        //Log.d("Hashcode2:", card1_text.toString()); //nur für entwicklung, nachher löschen
+                        //Log.d("Hashcode1:", card2_text.toString()); //nur für entwicklung, nachher löschen
 
 
-                        //if(card1_text.equals(card2_text)){
-                        Integer card_summe = card1_text+card2_text;
+
+                        Integer card_summe = card1_text_int+card2_text_int;
                         if(card_summe==183 ||  card_summe == 363 ||  card_summe == 395 ||  card_summe == 389 ||  card_summe == 411){
                             //Baumsorte ermitteln
                              String baum_sorte;
                             if(card_summe == 183){
                                 baum_sorte = "Birke";
                             }
-                                else{
-                                    baum_sorte = "BAUM";
+                            else if(card_summe == 363){
+                                    baum_sorte = "Trauerweide";
                             }
+                            else if(card_summe == 411){
+                                baum_sorte = "Rosskastanie";
+                            }
+                            else if(card_summe == 395){
+                                baum_sorte = "Eibe";
+                            }
+                            else {
+                                baum_sorte = "Buche";
+                            }
+
                             //Erfolg anzeigen
                             Toast myToast = Toast.makeText(getApplicationContext(), baum_sorte , Toast.LENGTH_LONG);
                             myToast.show();
 
                             //gefundenes Pärchen markieren
-                            card1.setText(baum_sorte); //durch String-Resource ersetzten
+                            card1.setText("pair"); //durch String-Resource ersetzten
                             card1.setTextColor(Color.WHITE);
                             card1.setTextSize(23);
 
-                            card2.setText(baum_sorte);
+                            card2.setText("pair");
                             card2.setTextSize(23);
                             card2.setTextColor(Color.WHITE);
 
@@ -203,11 +229,11 @@ public class TreeMemory extends AppCompatActivity  {
                         //image_gameover.setVisibility(View.VISIBLE);
                         Toast myToast = Toast.makeText(getApplicationContext(),"Super, alle gefunden!", Toast.LENGTH_LONG);
                         myToast.show();
-                        long endTime = System.currentTimeMillis() + 3000; //Stern sollte 3 millisekunden laufen
+                        long endTime = System.currentTimeMillis() + 30000; //Stern sollte 3 millisekunden laufen
                         while (System.currentTimeMillis() < endTime) {
-                            //loop
                             image_gameover.setVisibility(View.VISIBLE);
                         }
+                        image_gameover.setVisibility(View.INVISIBLE);
 
                     }
                 }

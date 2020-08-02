@@ -13,9 +13,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import android.util.Log;
 
-public class AnimalMemory extends AppCompatActivity {
 
+public class TreeMemory extends AppCompatActivity  {
     public int counter_control_zwei = 0; //global?
     public int clicked = 0;
     public boolean turned_2_over = false;
@@ -28,31 +29,32 @@ public class AnimalMemory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
 
+
         Intent intent = getIntent(); //gets the intent that started this activity
 
         //meine Programmcode-Beginn
 
         final ArrayList<Integer> images = new ArrayList<Integer>(10);
-        images.add(0, R.drawable.bat);
-        images.add (1, R.drawable.bee);
-        images.add (2, R.drawable.coala);
-        images.add (3, R.drawable.eagle);
-        images.add (4, R.drawable.elephant);
-        images.add (5, R.drawable.penguin);
-        images.add (6, R.drawable.shark);
-        images.add (7, R.drawable.sheep);
-        images.add (8, R.drawable.spider);
-        images.add (9, R.drawable.turtle);
-        images.add(10, R.drawable.bat);
-        images.add (11, R.drawable.bee);
-        images.add (12, R.drawable.coala);
-        images.add (13, R.drawable.eagle);
-        images.add (14, R.drawable.elephant);
-        images.add (15, R.drawable.penguin);
-        images.add (16, R.drawable.shark);
-        images.add (17, R.drawable.sheep);
-        images.add (18, R.drawable.spider);
-        images.add (19, R.drawable.turtle);
+        images.add(0, R.drawable.a1_birke);
+        images.add (1, R.drawable.a2_birke);
+        images.add (2, R.drawable.b1_trauerweide);
+        images.add (3, R.drawable.b2_trauerweide);
+        images.add (4, R.drawable.c1_buche);
+        images.add (5, R.drawable.c2_buche);
+        images.add (6, R.drawable.d1_eibe);
+        images.add (7, R.drawable.d2_eibe);
+        images.add (8, R.drawable.e1_rosskastanie);
+        images.add (9, R.drawable.e2_rosskastanie);
+        images.add(10, R.drawable.a1_birke);
+        images.add (11, R.drawable.a2_birke);
+        images.add (12, R.drawable.b1_trauerweide);
+        images.add (13, R.drawable.b2_trauerweide);
+        images.add (14, R.drawable.c1_buche);
+        images.add (15, R.drawable.c2_buche);
+        images.add (16, R.drawable.d1_eibe);
+        images.add (17, R.drawable.d2_eibe);
+        images.add (18, R.drawable.e1_rosskastanie);
+        images.add (19, R.drawable.e2_rosskastanie);
 
         final Button button1,button2, button3, button4, button5, button6, button7,
                 button8,button9, button10, button11, button12, button13, button14,
@@ -87,21 +89,26 @@ public class AnimalMemory extends AppCompatActivity {
         button19 = (Button) findViewById(R.id.button_ghost19);
         button20 = (Button) findViewById(R.id.button_ghost20);
 
-        final Button[] button_list = {button1, button2, button3, button4, button5, button6,
+        final Button[] button_list = {button1, button2, button3, button4, button5, button6, //auch weg?
                 button7, button8, button9, button10, button11, button12, button13, button14,
                 button15, button16, button17, button18, button19, button20};
-        //hier habe ich testweise grade auskommentiert
-        //final Integer[] images_list1 = {R.drawable.bat, R.drawable.coala, R.drawable.elephant,  //kann weg?
-         //                        R.drawable.fox, R.drawable.turtle,
-          //      R.drawable.bat, R.drawable.coala, R.drawable.elephant,
-          //      R.drawable.fox, R.drawable.turtle};
+        //nachfolgender Absatz kann gelöscht werden, wenn alles soweit funktioniert
+        //final Integer[] images_list1 = {R.drawable.a1_birke, R.drawable.a1_birke, R.drawable.a2_birke,
+            //    R.drawable.a2_birke,R.drawable.a2_birke,R.drawable.a2_birke, R.drawable.a2_birke,
+           //     R.drawable.a2_birke, R.drawable.a2_birke};
 
+
+        //alle ghosts ersetzen -> durch Bäumchen
+        for(int i=0;i<button_list.length;i++) {
+
+            button_list[i].setBackgroundResource(R.drawable.baum_unbekannt); //weiter unten gibt es auch eine stelle
+        }
 
         Collections.shuffle(images); //Bilder werden geshuffelt
         final Integer[] images_list = images.toArray(new Integer[images.size()]); //turn geshuffelte ArrayList into Array
 
-        final int[] counter_front_back = {0}; //final Array, damit diese Variable in der Click-Methode nutzbar ist, Workaround vorschlag von Android Stuiod
-            //genaueers hier: https://stackoverflow.com/questions/14425826/variable-is-accessed-within-inner-class-needs-to-be-declared-final
+        final int[] counter_front_back = {0}; //final Array, damit diese Variable in der Click-Methode nutzbar ist, Workaround vorschlag von Android Stuiod -> wird nie benutzt, kann also gelöscht werden?
+        //genaueers hier: https://stackoverflow.com/questions/14425826/variable-is-accessed-within-inner-class-needs-to-be-declared-final
         //um zu überprüfen, wann Vorder und Rückseite der Karten zu sehen sind, im Tutorial nimmt man unsichtbaren Buttontext
 
 
@@ -137,11 +144,9 @@ public class AnimalMemory extends AppCompatActivity {
 
                     }
                     else if(card1.getText().toString() != "cardBack" && turned_2_over == true && card1.getText().toString() != "pair" ){
-                        card1.setBackgroundResource(R.drawable.ghost);
-
+                        card1.setBackgroundResource(R.drawable.baum_unbekannt);
 
                         card1.setText("cardBack"); //resource
-
 
                         counter_control_zwei--; //wieder zurück, damit neues Pärchen gedreht werden kann
                     }
@@ -151,7 +156,54 @@ public class AnimalMemory extends AppCompatActivity {
                         //Vergleich der Bild-Texte
                         Button card2 = button_list[card_to_compare];
 
-                        if(card1.getText().toString().equals(card2.getText().toString())){
+                        //get Texts from Memory-Cards 1 and 2
+                        String card1_text = card1.getText().toString();
+                        String card2_text = card2.getText().toString();
+                        Integer card1_text_int;
+                        if(card1_text!="pair" && card1_text !="cardBack"){
+                            //damit es nicht zum Overflow kommt, wenn die Karte gerade auf Modus pair oder cardBack ist
+                            card1_text_int = Integer.parseInt(card1_text)- 2131165100;
+                        }
+                        else{
+                            card1_text_int = 1;
+                        }
+                        Integer card2_text_int;
+                        if(card2_text!="pair" && card2_text !="cardBack"){
+                            card2_text_int = Integer.parseInt(card2_text)- 2131165100;
+                        }
+                        else{
+                            card2_text_int = 1;
+                        }
+
+                        //Log.d("Hashcode2:", card1_text.toString()); //nur für entwicklung, nachher löschen
+                        //Log.d("Hashcode1:", card2_text.toString()); //nur für entwicklung, nachher löschen
+
+
+
+                        Integer card_summe = card1_text_int+card2_text_int;
+                        if(card_summe==183 ||  card_summe == 363 ||  card_summe == 395 ||  card_summe == 389 ||  card_summe == 411){
+                            //Baumsorte ermitteln
+                             String baum_sorte;
+                            if(card_summe == 183){
+                                baum_sorte = "Birke";
+                            }
+                            else if(card_summe == 363){
+                                    baum_sorte = "Trauerweide";
+                            }
+                            else if(card_summe == 411){
+                                baum_sorte = "Rosskastanie";
+                            }
+                            else if(card_summe == 395){
+                                baum_sorte = "Eibe";
+                            }
+                            else {
+                                baum_sorte = "Buche";
+                            }
+
+                            //Erfolg anzeigen
+                            Toast myToast = Toast.makeText(getApplicationContext(), baum_sorte , Toast.LENGTH_LONG);
+                            myToast.show();
+
                             //gefundenes Pärchen markieren
                             card1.setText("pair"); //durch String-Resource ersetzten
                             card1.setTextColor(Color.WHITE);
@@ -174,9 +226,14 @@ public class AnimalMemory extends AppCompatActivity {
                     }
                     if(pair_counter == 0){
                         //Spiel-Ende
-                        image_gameover.setVisibility(View.VISIBLE);
+                        //image_gameover.setVisibility(View.VISIBLE);
                         Toast myToast = Toast.makeText(getApplicationContext(),"Super, alle gefunden!", Toast.LENGTH_LONG);
                         myToast.show();
+                        long endTime = System.currentTimeMillis() + 30000; //Stern sollte 3 millisekunden laufen
+                        while (System.currentTimeMillis() < endTime) {
+                            image_gameover.setVisibility(View.VISIBLE);
+                        }
+                        image_gameover.setVisibility(View.INVISIBLE);
 
                     }
                 }
@@ -184,7 +241,7 @@ public class AnimalMemory extends AppCompatActivity {
 
         }
 
-    //VideoMinute 40.48 min
+        //VideoMinute 40.48 min
         //https://www.youtube.com/watch?v=BGvjScKcW1s
 
 

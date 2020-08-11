@@ -37,24 +37,24 @@ public class TreeMemory extends AppCompatActivity  {
         final ArrayList<Integer> images = new ArrayList<Integer>(10);
         images.add(0, R.drawable.a1_birke);
         images.add (1, R.drawable.a2_birke);
-        images.add (2, R.drawable.b1_trauerweide);
-        images.add (3, R.drawable.b2_trauerweide);
-        images.add (4, R.drawable.c1_buche);
-        images.add (5, R.drawable.c2_buche);
+        images.add (2, R.drawable.c1_trauerweide);
+        images.add (3, R.drawable.c2_trauerweide);
+        images.add (4, R.drawable.b1_buche);
+        images.add (5, R.drawable.b2_buche);
         images.add (6, R.drawable.d1_eibe);
         images.add (7, R.drawable.d2_eibe);
         images.add (8, R.drawable.e1_rosskastanie);
         images.add (9, R.drawable.e2_rosskastanie);
-        images.add(10, R.drawable.a1_birke);
-        images.add (11, R.drawable.a2_birke);
-        images.add (12, R.drawable.b1_trauerweide);
-        images.add (13, R.drawable.b2_trauerweide);
-        images.add (14, R.drawable.c1_buche);
-        images.add (15, R.drawable.c2_buche);
-        images.add (16, R.drawable.d1_eibe);
-        images.add (17, R.drawable.d2_eibe);
-        images.add (18, R.drawable.e1_rosskastanie);
-        images.add (19, R.drawable.e2_rosskastanie);
+        images.add(10, R.drawable.f1_eberesche);
+        images.add (11, R.drawable.f2_eberesche);
+        images.add (12, R.drawable.g1_eiche);
+        images.add (13, R.drawable.g2_eiche);
+        images.add (14, R.drawable.h1_kiefer);
+        images.add (15, R.drawable.h2_kiefer);
+        images.add (16, R.drawable.i1_kirschbaum);
+        images.add (17, R.drawable.i2_kirschbaum);
+        images.add (18, R.drawable.j1_pappel);
+        images.add (19, R.drawable.j2_pappel);
 
         final Button button1,button2, button3, button4, button5, button6, button7,
                 button8,button9, button10, button11, button12, button13, button14,
@@ -92,15 +92,9 @@ public class TreeMemory extends AppCompatActivity  {
         final Button[] button_list = {button1, button2, button3, button4, button5, button6, //auch weg?
                 button7, button8, button9, button10, button11, button12, button13, button14,
                 button15, button16, button17, button18, button19, button20};
-        //nachfolgender Absatz kann gelöscht werden, wenn alles soweit funktioniert
-        //final Integer[] images_list1 = {R.drawable.a1_birke, R.drawable.a1_birke, R.drawable.a2_birke,
-            //    R.drawable.a2_birke,R.drawable.a2_birke,R.drawable.a2_birke, R.drawable.a2_birke,
-           //     R.drawable.a2_birke, R.drawable.a2_birke};
-
 
         //alle ghosts ersetzen -> durch Bäumchen
         for(int i=0;i<button_list.length;i++) {
-
             button_list[i].setBackgroundResource(R.drawable.baum_unbekannt); //weiter unten gibt es auch eine stelle
         }
 
@@ -175,19 +169,20 @@ public class TreeMemory extends AppCompatActivity  {
                             card2_text_int = 1;
                         }
 
-                        //Log.d("Hashcode2:", card1_text.toString()); //nur für entwicklung, nachher löschen
-                        //Log.d("Hashcode1:", card2_text.toString()); //nur für entwicklung, nachher löschen
+                        Log.d("Hashcode2:", card1_text.toString()); //nur für entwicklung, nachher löschen
+                        Log.d("Hashcode1:", card2_text.toString()); //nur für entwicklung, nachher löschen
 
 
 
                         Integer card_summe = card1_text_int+card2_text_int;
-                        if(card_summe==183 ||  card_summe == 363 ||  card_summe == 395 ||  card_summe == 389 ||  card_summe == 411){
+                        if(card_summe==183 ||  card_summe == 363 ||  card_summe == 395 ||  card_summe == 462 ||  card_summe == 411
+                                ||  card_summe == 435 ||  card_summe == 465 ||  card_summe == 431 ||  card_summe == 417 ||  card_summe == 425){
                             //Baumsorte ermitteln
                              String baum_sorte;
                             if(card_summe == 183){
                                 baum_sorte = "Birke";
                             }
-                            else if(card_summe == 363){
+                            else if(card_summe == 389){
                                     baum_sorte = "Trauerweide";
                             }
                             else if(card_summe == 411){
@@ -196,8 +191,23 @@ public class TreeMemory extends AppCompatActivity  {
                             else if(card_summe == 395){
                                 baum_sorte = "Eibe";
                             }
-                            else {
+                            else if(card_summe == 363){
                                 baum_sorte = "Buche";
+                            }
+                            else if(card_summe == 435){
+                                baum_sorte = "Kirsche";
+                            }
+                            else if(card_summe == 465){
+                                baum_sorte = "Pappel";
+                            }
+                            else if(card_summe == 431){
+                                baum_sorte = "Kiefer";
+                            }
+                            else if(card_summe == 417){
+                                baum_sorte = "Eberesche";
+                            }
+                            else {
+                                baum_sorte = "Eiche";
                             }
 
                             //Erfolg anzeigen
@@ -217,23 +227,26 @@ public class TreeMemory extends AppCompatActivity  {
                             pair_counter--;
                             String counter_string = Integer.toString(pair_counter);
                             pair_counter_textfenster.setText(counter_string);
-                            turned_2_over = false;
-                            counter_control_zwei=0;
+                            if(pair_counter!=0){ //testweise hinzufgeüft
+                                turned_2_over = false;
+                                counter_control_zwei=0;
+                            }
+
                         }
                     }
                     else if(counter_control_zwei ==0){
                         turned_2_over = false;
                     }
-                    if(pair_counter == 0){
+                    if(pair_counter == 0){ //teste, dnach wieder auf 0
                         //Spiel-Ende
-                        //image_gameover.setVisibility(View.VISIBLE);
-                        Toast myToast = Toast.makeText(getApplicationContext(),"Super, alle gefunden!", Toast.LENGTH_LONG);
-                        myToast.show();
-                        long endTime = System.currentTimeMillis() + 30000; //Stern sollte 3 millisekunden laufen
-                        while (System.currentTimeMillis() < endTime) {
-                            image_gameover.setVisibility(View.VISIBLE);
-                        }
-                        image_gameover.setVisibility(View.INVISIBLE);
+                        image_gameover.setVisibility(View.VISIBLE);
+                        Toast myToast2 = Toast.makeText(getApplicationContext(),"Super, alle gefunden!", Toast.LENGTH_LONG);
+                        myToast2.show();
+                        //long endTime = System.currentTimeMillis() + 30000; //Stern sollte 3 millisekunden laufen
+                        //while (System.currentTimeMillis() < endTime) {
+                        //    image_gameover.setVisibility(View.VISIBLE);
+                        //}
+                        //image_gameover.setVisibility(View.INVISIBLE);
 
                     }
                 }

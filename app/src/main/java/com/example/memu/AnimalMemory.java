@@ -139,7 +139,9 @@ public class AnimalMemory extends AppCompatActivity {
                     else if(card1.getText().toString() != "cardBack" && turned_2_over == true && card1.getText().toString() != "pair" ){
                         card1.setBackgroundResource(R.drawable.ghost);
 
+
                         card1.setText("cardBack"); //resource
+
 
                         counter_control_zwei--; //wieder zurück, damit neues Pärchen gedreht werden kann
                     }

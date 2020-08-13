@@ -150,31 +150,10 @@ public class TreeMemory extends AppCompatActivity  {
                         //get Texts from Memory-Cards 1 and 2
                         String card1_text = card1.getText().toString();
                         String card2_text = card2.getText().toString();
-                        //Integer card1_text_int =1;
-                        //if(card1_text!=cardback_found_pair && card1_text !=cardback_text) {        //wichtig?
-                        //    //damit es nicht zum Overflow kommt, wenn die Karte gerade auf Modus pair oder cardBack ist
-                        //    card1_text_int = Integer.parseInt(card1_text)- 2131165100;
-                        //}
-                        //else{
-                        //    card1_text_int = 1;
-                        //}
-                        //Integer card2_text_int;
-                        //if(card2_text!="pair" && card2_text !="cardBack"){
-                        //    card2_text_int = Integer.parseInt(card2_text)- 2131165100;
-                        //}
-                        //else{
-                        //    card2_text_int = 1;
-                        //}
 
                         //umbenennung nach Baumart  für den Vergleih
-                        Log.d("Hashcode1:", card2_text.toString()); //nur für entwicklung, nachher löschen
-                        Log.d("Hashcode2:", card1_text.toString()); //nur für entwicklung, nachher löschen
-
                         card1_text = rename_by_treetype(card1_text); //je nach Datei, wird die Baumsorte benannt
                         card2_text = rename_by_treetype(card2_text);
-
-                        Log.d("Hash_neu1", card2_text); //nur für entwicklung, nachher löschen
-                        Log.d("Hash_neu2", card1_text); //nur für entwicklung, nachher löschen
 
                         String baum_sorte = "kein Paar";
                         if (card1_text == card2_text) {
@@ -198,7 +177,7 @@ public class TreeMemory extends AppCompatActivity  {
                             pair_counter--;
                             String counter_string = Integer.toString(pair_counter);
                             pair_counter_textfenster.setText(counter_string);
-                            if (pair_counter != 0) { //testweise hinzufgefüft   -> kann gelöscht werden?
+                            if (pair_counter != 0) {
                                 turned_2_over = false;
                                 counter_control_zwei = 0;
                             }
@@ -212,14 +191,11 @@ public class TreeMemory extends AppCompatActivity  {
                         Toast myToast2 = Toast.makeText(getApplicationContext(), "Super, alle gefunden!", Toast.LENGTH_LONG);
                         myToast2.show();
                     }
-                    //} //kommt weg, wenn ich Zeile 155 auskommentiere
-                    //}}
                 }
             }); //diese Klammer + ; ist wichtig!
-
             }
     }
-    //Funktion um Baumsorte zu bestimmen
+    //Funktion mit switch-case um Baumsorte zu bestimmen
     String rename_by_treetype(String any_card_text){
         String neuerText=" ";
 
@@ -273,9 +249,7 @@ public class TreeMemory extends AppCompatActivity  {
             default :
                 neuerText = "noch unbekannt";
         }
-
         return neuerText;
-
     }
 }
 

@@ -31,7 +31,6 @@ public class TreeMemory extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
 
-
         Intent intent = getIntent(); //gets the intent that started this activity
 
         //meine Programmcode-Beginn
@@ -63,7 +62,7 @@ public class TreeMemory extends AppCompatActivity  {
                 button15, button16, button17, button18, button19, button20;
 
         final TextView pair_counter_textfenster, click_counter_textfenster;
-        pair_counter_textfenster = (TextView) findViewById(R.id.textView_pair_counter); //redundant?
+        pair_counter_textfenster = (TextView) findViewById(R.id.textView_pair_counter);
 
         final ImageView image_gameover;
         image_gameover = (ImageView) findViewById(R.id.image_gameover);
@@ -91,42 +90,39 @@ public class TreeMemory extends AppCompatActivity  {
         button19 = (Button) findViewById(R.id.button_ghost19);
         button20 = (Button) findViewById(R.id.button_ghost20);
 
-        final Button[] button_list = {button1, button2, button3, button4, button5, button6, //auch weg?
+        final Button[] button_list = {button1, button2, button3, button4, button5, button6,
                 button7, button8, button9, button10, button11, button12, button13, button14,
                 button15, button16, button17, button18, button19, button20};
 
-        //alle ghosts ersetzen -> durch Bäumchen
+        //alle ghosts ersetzen -> durch unbekanntes Bäumchen
         for(int i=0;i<button_list.length;i++) {
-            button_list[i].setBackgroundResource(R.drawable.baum_unbekannt); //weiter unten gibt es auch eine stelle
+            button_list[i].setBackgroundResource(R.drawable.baum_unbekannt);
         }
 
-        Collections.shuffle(images); //Bilder werden geshuffelt
+        Collections.shuffle(images); //Bäume-Bilder werden geshuffelt
         final Integer[] images_list = images.toArray(new Integer[images.size()]); //turn geshuffelte ArrayList into Array
 
-        final int[] counter_front_back = {0}; //final Array, damit diese Variable in der Click-Methode nutzbar ist, Workaround vorschlag von Android Stuiod -> wird nie benutzt, kann also gelöscht werden?
+        final String cardback_text = "cardback"; //Karten-Rückseite beschriften
+        final String cardback_found_pair = "pair"; //um Pärchen zu markieren
+
+        //final int[] counter_front_back = {0}; //final Array, damit diese Variable in der Click-Methode nutzbar ist, Workaround vorschlag von Android Stuiod -> wird nie benutzt, kann also gelöscht werden?
+
         //genaueers hier: https://stackoverflow.com/questions/14425826/variable-is-accessed-within-inner-class-needs-to-be-declared-final
+
         //um zu überprüfen, wann Vorder und Rückseite der Karten zu sehen sind, im Tutorial nimmt man unsichtbaren Buttontext
-
-
         for(int i=0;i<button_list.length;i++){
-
-            button_list[i].setText("cardBack"); //durch nachfolgende Zeile ersetzt
-            //button_list[i].setText(R.string.card_back);
+            button_list[i].setText(cardback_text);
             button_list[i].setTextSize(0,0); //macht den ButtonText unsichtbar
 
-            final int loop_counter = i; //final, damit es noch iin OnClick-Methode genutzt werden kann
+            final int loop_counter = i; //final, damit es noch in OnClick-Methode genutzt werden kann
 
             button_list[i].setOnClickListener(new View.OnClickListener() { //beim Anklicken eines Buttons, wird ein Bild aus der Liste dahinter eingefügt
                 @RequiresApi(api = Build.VERSION_CODES.P)
                 @Override
                 public void onClick(View v) {
-
-
                     Button card1 = button_list[loop_counter];
 
-
-
-                    if(card1.getText().toString() =="cardBack" && turned_2_over == false) {
+                    if (card1.getText().toString().equals(cardback_text) && turned_2_over == false) {
                         card1.setBackgroundResource(images_list[loop_counter]);
                         card1.setText(images_list[loop_counter].toString());
 
@@ -135,22 +131,18 @@ public class TreeMemory extends AppCompatActivity  {
                         String click_counter_string = Integer.toString(click_counter);
                         click_counter_textfenster.setText(click_counter_string);
 
-                        if (counter_control_zwei == 0){ //wenn das erste Karte zum Umdrehen ist
+                        if (counter_control_zwei == 0) { //wenn das erste Karte zum Umdrehen ist
                             //für späteren Pärchen-Vergleich speichern
                             card_to_compare = loop_counter;
                         }
                         counter_control_zwei++;
-
-                    }
-                    else if(card1.getText().toString() != "cardBack" && turned_2_over == true && card1.getText().toString() != "pair" ){
+                    } else if (card1.getText().toString() != cardback_text && turned_2_over == true && card1.getText().toString() != cardback_found_pair) {
                         card1.setBackgroundResource(R.drawable.baum_unbekannt);
-
-                        card1.setText("cardBack"); //resource
-
+                        card1.setText(cardback_text); //resource
                         counter_control_zwei--; //wieder zurück, damit neues Pärchen gedreht werden kann
                     }
 
-                    if (counter_control_zwei ==2 && card1.getText().toString() != "pair"){
+                    if (counter_control_zwei == 2 && card1.getText().toString() != cardback_found_pair) {
                         turned_2_over = true;
                         //Vergleich der Bild-Texte
                         Button card2 = button_list[card_to_compare];
@@ -158,131 +150,78 @@ public class TreeMemory extends AppCompatActivity  {
                         //get Texts from Memory-Cards 1 and 2
                         String card1_text = card1.getText().toString();
                         String card2_text = card2.getText().toString();
-                        Integer card1_text_int;
-                        if(card1_text!="pair" && card1_text !="cardBack"){
-                            //damit es nicht zum Overflow kommt, wenn die Karte gerade auf Modus pair oder cardBack ist
-                            card1_text_int = Integer.parseInt(card1_text)- 2131165100;
-                        }
-                        else{
-                            card1_text_int = 1;
-                        }
-                        Integer card2_text_int;
-                        if(card2_text!="pair" && card2_text !="cardBack"){
-                            card2_text_int = Integer.parseInt(card2_text)- 2131165100;
-                        }
-                        else{
-                            card2_text_int = 1;
-                        }
+                        //Integer card1_text_int =1;
+                        //if(card1_text!=cardback_found_pair && card1_text !=cardback_text) {        //wichtig?
+                        //    //damit es nicht zum Overflow kommt, wenn die Karte gerade auf Modus pair oder cardBack ist
+                        //    card1_text_int = Integer.parseInt(card1_text)- 2131165100;
+                        //}
+                        //else{
+                        //    card1_text_int = 1;
+                        //}
+                        //Integer card2_text_int;
+                        //if(card2_text!="pair" && card2_text !="cardBack"){
+                        //    card2_text_int = Integer.parseInt(card2_text)- 2131165100;
+                        //}
+                        //else{
+                        //    card2_text_int = 1;
+                        //}
 
-
-
-
-//hier arbeite ich an einer umbenennung nach Baumart  für den Vergleih
+                        //umbenennung nach Baumart  für den Vergleih
                         Log.d("Hashcode1:", card2_text.toString()); //nur für entwicklung, nachher löschen
                         Log.d("Hashcode2:", card1_text.toString()); //nur für entwicklung, nachher löschen
 
-
-
-                        card1_text = rename_by_treetype(card1_text);
+                        card1_text = rename_by_treetype(card1_text); //je nach Datei, wird die Baumsorte benannt
                         card2_text = rename_by_treetype(card2_text);
 
                         Log.d("Hash_neu1", card2_text); //nur für entwicklung, nachher löschen
                         Log.d("Hash_neu2", card1_text); //nur für entwicklung, nachher löschen
 
-
-
                         String baum_sorte = "kein Paar";
                         if (card1_text == card2_text) {
-                            baum_sorte = card1_text; //falls kein Pärchen
+                            baum_sorte = card1_text;
 
-                        //Integer card_summe = card1_text_int+card2_text_int;
-                        //if(card_summe==183 ||  card_summe == 363 ||  card_summe == 395 ||  card_summe == 462 ||  card_summe == 411
-                        //        ||  card_summe == 435 ||  card_summe == 465 ||  card_summe == 431 ||  card_summe == 417 ||  card_summe == 425){
-                        //    //Baumsorte ermitteln
-                        //     String baum_sorte;
-                        //    if(card_summe == 183){
-                        //        baum_sorte = "Birke";
-                        //    }
-                        //    else if(card_summe == 389){
-                        //            baum_sorte = "Trauerweide";
-                        //    }
-                        //    else if(card_summe == 411){
-                        //        baum_sorte = "Rosskastanie";
-                        //    }
-                        //    else if(card_summe == 395){
-                        //        baum_sorte = "Eibe";
-                        //    }
-                        //    else if(card_summe == 363){
-                        //        baum_sorte = "Buche";
-                        //    }
-                        //    else if(card_summe == 435){
-                        //        baum_sorte = "Kirsche";
-                        //    }
-                        //    else if(card_summe == 465){
-                        //        baum_sorte = "Pappel";
-                        //    }
-                        //    else if(card_summe == 431){
-                        //        baum_sorte = "Kiefer";
-                        //    }
-                        //    else if(card_summe == 417){
-                        //        baum_sorte = "Eberesche";
-                        //    }
-                        //    else {
-                        //        baum_sorte = "Eiche";
-                        //    }
-//
                             //Erfolg anzeigen
-                            Toast myToast = Toast.makeText(getApplicationContext(), baum_sorte , Toast.LENGTH_LONG);
+                            Toast myToast = Toast.makeText(getApplicationContext(), baum_sorte, Toast.LENGTH_LONG);
                             myToast.show();
 
                             //gefundenes Pärchen markieren
-                            card1.setText("pair"); //durch String-Resource ersetzten
+                            card1.setText(cardback_found_pair);
                             card1.setTextColor(Color.WHITE);
                             card1.setTextSize(23);
 
-                            card2.setText("pair");
-                            card2.setTextSize(23);
+                            card2.setText(cardback_found_pair);
                             card2.setTextColor(Color.WHITE);
+                            card2.setTextSize(23);
 
+                            //pair-counter zurücksetzen
                             pair_counter = Integer.parseInt(pair_counter_textfenster.getText().toString());
                             pair_counter--;
                             String counter_string = Integer.toString(pair_counter);
                             pair_counter_textfenster.setText(counter_string);
-                            if(pair_counter!=0){ //testweise hinzufgeüft
+                            if (pair_counter != 0) { //testweise hinzufgefüft   -> kann gelöscht werden?
                                 turned_2_over = false;
-                                counter_control_zwei=0;
+                                counter_control_zwei = 0;
                             }
-
                         }
-                    }
-                    else if(counter_control_zwei ==0){
+                    } else if (counter_control_zwei == 0) {
                         turned_2_over = false;
                     }
-                    if(pair_counter == 0){ //teste, dnach wieder auf 0
+                    if (pair_counter == 0) {
                         //Spiel-Ende
                         image_gameover.setVisibility(View.VISIBLE);
-                        Toast myToast2 = Toast.makeText(getApplicationContext(),"Super, alle gefunden!", Toast.LENGTH_LONG);
+                        Toast myToast2 = Toast.makeText(getApplicationContext(), "Super, alle gefunden!", Toast.LENGTH_LONG);
                         myToast2.show();
-                        //long endTime = System.currentTimeMillis() + 30000; //Stern sollte 3 millisekunden laufen
-                        //while (System.currentTimeMillis() < endTime) {
-                        //    image_gameover.setVisibility(View.VISIBLE);
-                        //}
-                        //image_gameover.setVisibility(View.INVISIBLE);
-
                     }
+                    //} //kommt weg, wenn ich Zeile 155 auskommentiere
+                    //}}
                 }
             }); //diese Klammer + ; ist wichtig!
 
-        }
-
-        //VideoMinute 40.48 min
-        //https://www.youtube.com/watch?v=BGvjScKcW1s
-
-
+            }
     }
-    String rename_by_treetype(String any_card_text){        //funktioniert nicht
+    //Funktion um Baumsorte zu bestimmen
+    String rename_by_treetype(String any_card_text){
         String neuerText=" ";
-        //String minimized_number = (any_card.getText().toString())-2000;
 
         switch(any_card_text) {
             case "2131165294" :

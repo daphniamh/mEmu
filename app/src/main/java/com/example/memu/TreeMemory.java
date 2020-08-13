@@ -1,9 +1,11 @@
 package com.example.memu;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -115,11 +117,14 @@ public class TreeMemory extends AppCompatActivity  {
             final int loop_counter = i; //final, damit es noch iin OnClick-Methode genutzt werden kann
 
             button_list[i].setOnClickListener(new View.OnClickListener() { //beim Anklicken eines Buttons, wird ein Bild aus der Liste dahinter eingefügt
+                @RequiresApi(api = Build.VERSION_CODES.P)
                 @Override
                 public void onClick(View v) {
 
 
                     Button card1 = button_list[loop_counter];
+
+
 
                     if(card1.getText().toString() =="cardBack" && turned_2_over == false) {
                         card1.setBackgroundResource(images_list[loop_counter]);
@@ -169,47 +174,63 @@ public class TreeMemory extends AppCompatActivity  {
                             card2_text_int = 1;
                         }
 
-                        Log.d("Hashcode2:", card1_text.toString()); //nur für entwicklung, nachher löschen
+
+
+
+//hier arbeite ich an einer umbenennung nach Baumart  für den Vergleih
                         Log.d("Hashcode1:", card2_text.toString()); //nur für entwicklung, nachher löschen
+                        Log.d("Hashcode2:", card1_text.toString()); //nur für entwicklung, nachher löschen
 
 
 
-                        Integer card_summe = card1_text_int+card2_text_int;
-                        if(card_summe==183 ||  card_summe == 363 ||  card_summe == 395 ||  card_summe == 462 ||  card_summe == 411
-                                ||  card_summe == 435 ||  card_summe == 465 ||  card_summe == 431 ||  card_summe == 417 ||  card_summe == 425){
-                            //Baumsorte ermitteln
-                             String baum_sorte;
-                            if(card_summe == 183){
-                                baum_sorte = "Birke";
-                            }
-                            else if(card_summe == 389){
-                                    baum_sorte = "Trauerweide";
-                            }
-                            else if(card_summe == 411){
-                                baum_sorte = "Rosskastanie";
-                            }
-                            else if(card_summe == 395){
-                                baum_sorte = "Eibe";
-                            }
-                            else if(card_summe == 363){
-                                baum_sorte = "Buche";
-                            }
-                            else if(card_summe == 435){
-                                baum_sorte = "Kirsche";
-                            }
-                            else if(card_summe == 465){
-                                baum_sorte = "Pappel";
-                            }
-                            else if(card_summe == 431){
-                                baum_sorte = "Kiefer";
-                            }
-                            else if(card_summe == 417){
-                                baum_sorte = "Eberesche";
-                            }
-                            else {
-                                baum_sorte = "Eiche";
-                            }
+                        card1_text = rename_by_treetype(card1_text);
+                        card2_text = rename_by_treetype(card2_text);
 
+                        Log.d("Hash_neu1", card2_text); //nur für entwicklung, nachher löschen
+                        Log.d("Hash_neu2", card1_text); //nur für entwicklung, nachher löschen
+
+
+
+                        String baum_sorte = "kein Paar";
+                        if (card1_text == card2_text) {
+                            baum_sorte = card1_text; //falls kein Pärchen
+
+                        //Integer card_summe = card1_text_int+card2_text_int;
+                        //if(card_summe==183 ||  card_summe == 363 ||  card_summe == 395 ||  card_summe == 462 ||  card_summe == 411
+                        //        ||  card_summe == 435 ||  card_summe == 465 ||  card_summe == 431 ||  card_summe == 417 ||  card_summe == 425){
+                        //    //Baumsorte ermitteln
+                        //     String baum_sorte;
+                        //    if(card_summe == 183){
+                        //        baum_sorte = "Birke";
+                        //    }
+                        //    else if(card_summe == 389){
+                        //            baum_sorte = "Trauerweide";
+                        //    }
+                        //    else if(card_summe == 411){
+                        //        baum_sorte = "Rosskastanie";
+                        //    }
+                        //    else if(card_summe == 395){
+                        //        baum_sorte = "Eibe";
+                        //    }
+                        //    else if(card_summe == 363){
+                        //        baum_sorte = "Buche";
+                        //    }
+                        //    else if(card_summe == 435){
+                        //        baum_sorte = "Kirsche";
+                        //    }
+                        //    else if(card_summe == 465){
+                        //        baum_sorte = "Pappel";
+                        //    }
+                        //    else if(card_summe == 431){
+                        //        baum_sorte = "Kiefer";
+                        //    }
+                        //    else if(card_summe == 417){
+                        //        baum_sorte = "Eberesche";
+                        //    }
+                        //    else {
+                        //        baum_sorte = "Eiche";
+                        //    }
+//
                             //Erfolg anzeigen
                             Toast myToast = Toast.makeText(getApplicationContext(), baum_sorte , Toast.LENGTH_LONG);
                             myToast.show();
@@ -259,4 +280,63 @@ public class TreeMemory extends AppCompatActivity  {
 
 
     }
+    String rename_by_treetype(String any_card_text){        //funktioniert nicht
+        String neuerText=" ";
+        //String minimized_number = (any_card.getText().toString())-2000;
+
+        switch(any_card_text) {
+            case "2131165294" :
+            case "2131165295":
+                neuerText = "Trauerweide";
+                break;
+            case "2131165191" :
+            case "2131165192" :
+                neuerText = "Birke";
+                break;
+            case "2131165305" :
+            case "2131165306" :
+                neuerText = "Rosskastanie";
+                break;
+            case "2131165297" :
+            case "2131165298" :
+                neuerText = "Eibe";
+                break;
+            case "2131165281" :
+            case "2131165282" :
+                neuerText = "Buche";
+                break;
+            case "2131165317" :
+            case "2131165318" :
+                neuerText = "Kirsche";
+                break;
+            case "2131165332" :
+            case "2131165333" :
+                neuerText = "Pappel";
+                break;
+            case "2131165315" :
+            case "2131165316" :
+                neuerText = "Kiefer";
+                break;
+            case "2131165309" :
+            case "2131165310" :
+                neuerText = "Eberesche";
+                break;
+            case "2131165312" :
+            case "2131165313" :
+                neuerText = "Eiche";
+                break;
+            case "cardBack" :
+                neuerText = "cardBack";
+                break;
+            case "pair" :
+                neuerText = "pair";
+                break;
+            default :
+                neuerText = "noch unbekannt";
+        }
+
+        return neuerText;
+
+    }
 }
+
